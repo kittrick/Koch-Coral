@@ -14,9 +14,9 @@ class KochLine {
     float r = map(noise(nFrame), 0, 1, 0, 255);
     float g = map(noise(nFrame + 100), 0, 1, 0, 255);
     float b = map(noise(nFrame + 200) , 0, 1, 0, 255);
-    float weight = map(noise(nFrame/2), 0, 1, 1, 20);
+    //float weight = map(noise(nFrame/2), 0, 1, 1, 20);
     stroke(r, g, b);
-    strokeWeight(weight);
+    strokeWeight(1); //strokeWeight(weight);
     strokeJoin(MITER);
     line(start.x, start.y, end.x, end.y);
   }
@@ -35,10 +35,10 @@ class KochLine {
   PVector kochC() {
     PVector a = start.get();
     PVector v = PVector.sub(end,start);
-    
+    int upDown = random(1) > 0.5 ? -1 : 1;
     v.div(3);
     a.add(v);
-    v.rotate(-radians(60));
+    v.rotate(upDown*radians(60));
     a.add(v);
     
     return a;
@@ -75,10 +75,10 @@ void generate() {
 }
 
 void setup() {
-    size(600, 300);
+    size(600, 600);
     lines = new ArrayList<KochLine>();
-    PVector start = new PVector(0, 200);
-    PVector end = new PVector(width, 200);
+    PVector start = new PVector(0, height/2);
+    PVector end = new PVector(width, height/2);
     
     lines.add(new KochLine(start,end));
 }
